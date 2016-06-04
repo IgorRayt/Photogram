@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Photogram</title>
+    <link rel="stylesheet" type="text/css" href="css/lib/jquery.mobile-1.4.5.css">
+    <link rel="stylesheet" type="text/css" href="css/mycss.css">
+    <script src="js/lib/jquery-2.1.4.js" type="text/javascript" rel="script"></script>
+    <script src="js/lib/jquery.mobile-1.4.5.js" type="text/javascript" rel="script"></script>
+    <script src="js/lib/jquery.validate.js "></script>
+    <script src="cordova.js" type="javascript"></script>
+    <script src="js/photogramDAL.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/facade.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/util.js"></script>
+</head>
+<body>
+    <div data-role="page" id="loginPage">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+        </header>
+        <img src="images/collage.png" id="imgLogInBackground">
+        <section data-role="content" id="loginScreen">
+            <label for="txtLoginUsername">Username</label>
+            <input type="text" id="txtLoginUsername" name="loginUsername"
+                   class="required"
+                   data-theme="a" data-clear-btn="true">
+            <br>
+            <label for="txtLoginPassword">Password</label>
+            <input type="password" id="txtLoginPassword" name="loginPassword"  class="required"
+                   data-theme="a" data-clear-btn="true">
+            <br>
+            <a href="#" data-role="button" id="btnLogin" data-theme="b">Log In</a>
+            <br>
+            <a href="#createAccountPage" data-role="button" data-theme="b">Create Account</a>
+        </section>
+    </div>
+    <div data-role="page" id="createAccountPage">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/back.png" class="imgHeaderIcon" id="imgBackToLoginPage">
+        </header>
+        <img src="images/collage.png" id="imgLogInBackground">
+        <section data-role="content" id="loginScreen">
+            <form id="frmCreateUser">
+                <label for="txtCreateUsername">Username</label>
+                <input type="text" id="txtCreateUsername" name="txtUsername" class="required"
+                       data-theme="a" data-clear-btn="true">
+
+                <label for="txtCreateFirstName">First Name</label>
+                <input type="text" id="txtCreateFirstName" name="txtCreateFirstName" class="required"
+                       data-theme="a" data-clear-btn="true">
+
+                <label for="txtCreateLastName">Last Name</label>
+                <input type="text" id="txtCreateLastName" name="txtCreateLastName" class="required"
+                       data-theme="a" data-clear-btn="true">
+
+                <label for="txtCreateEmail">Email</label>
+                <input type="text" id="txtCreateEmail" name="txtCreateEmail" class="required"
+                       data-theme="a" data-clear-btn="true">
+
+                <label for="txtCreatePassword1">Password</label>
+                <input type="password" id="txtCreatePassword1" name="txtCreatePassword1" class="required"
+                       data-theme="a" data-clear-btn="true">
+
+                <label for="txtCreatePassword2">Confirm Passord</label>
+                <input type="password" id="txtCreatePassword2" name="txtCreatePassword2" class="required"
+                       data-theme="a" data-clear-btn="true">
+
+                <a href="#" data-role="button" id="btnCreateAccount" data-theme="b">Create Account</a>
+            </form>
+
+
+        </section>
+    </div>
+<div id="photosPage" data-role="page">
+    <header data-role="header" id="header" data-position="fixed">
+        <img src="images/logo.PNG" class="imgLogo">
+        <img src="images/add.png" class="imgHeaderIcon" id="imgAdd">
+    </header>
+    <section id="photoFeed" >
+
+    </section>
+    <footer data-role="footer" data-theme="b" data-position="fixed">
+        <div data-role="navbar" data-iconpos="top">
+            <ul>
+                <li><a href="#photosPage" data-icon="home"
+                       class="ui-btn-active ui-state-persist"></a></li>
+                <li><a href="#otherPhotosPage" data-icon="search"></a></li>
+                <li><a href="#myPhotosPage" data-icon="user"></a></li>
+            </ul>
+        </div>
+    </footer>
+</div>
+    <div id="otherPhotosPage" data-role="page">
+        <header data-role="header" id="header" data-position="fixed">
+            
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/search.png" class="imgHeaderIcon" id="imgSearch">
+        </header>
+        <div>
+            <input type="text" id="txtSearch" name="txtSearch" data-icon="search" data-iconpos="left"
+                   data-theme="a" placeholder="Search For User" data-clear-btn="true">
+        </div>
+        <section data-role="content" id="allUsers">
+
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                    <li><a href="#otherPhotosPage" data-icon="search"
+                           class="ui-btn-active ui-state-persist"></a></li>
+                    <li><a href="#myPhotosPage" data-icon="user" ></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <div id="otherUserPage" data-role="page">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/back.png" class="imgHeaderIcon" id="imgBackToOtherPhotosPage">
+        </header>
+        <section data-role="content">
+            <div id = "otherUserInfo" class = "userInfo">
+                <img src="" class="userPhoto" id="imgOtherUser">
+                <div id="otherUserNamesInfo" class="userNamesInfo">
+                    Username: <label id="txtOtherUserFirstNameInfo"></label><br>
+                    Last Name: <label id="txtOtherUserLastNameInfo"></label><br>
+                    First Name: <label id="txtOtherUsernameInfo"></label>
+                </div>
+            </div>
+            <div id="otherUserPhotoGrid">
+
+            </div>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                    <li><a href="#otherPhotosPage" data-icon="search"></a></li>
+                    <li><a href="#myPhotosPage" data-icon="user"
+                           class="ui-btn-active ui-state-persist"></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <div id="myPhotosPage" data-role="page">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/menu.png" class="imgHeaderIcon" id="imgMenu">
+        </header>
+        <section data-role="content">
+        <div class = "userInfo">
+            <img src="" class="userPhoto" id="userPhoto">
+            <div class="userNamesInfo">
+                Username: <label id="txtUserFirstNameInfo"></label><br>
+                Last Name: <label id="txtUserLastNameInfo"></label><br>
+                First Name: <label id="txtUsernameInfo"></label>
+            </div>
+        </div>
+        <div id="userPhotoGrid">
+
+        </div>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                    <li><a href="#otherPhotosPage" data-icon="search"></a></li>
+                    <li><a href="#myPhotosPage" data-icon="user"
+                           class="ui-btn-active ui-state-persist"></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <div id="addPhoto" data-role="page">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/back.png" class="imgHeaderIcon" id="imgBackToPhotosPage">
+        </header>
+        <section data-role="content">
+            <img src="" id="newPhoto" alt="">
+            <a href="" id="btnTakeNewPhoto" data-role="button" data-theme="b">Take New Photo</a>
+            <label for="txtNewPhotoName">Photo Name</label>
+            <input type="text" id="txtNewPhotoName" name="txtNewPhotoName"
+                   data-theme="a" data-clear-btn="true">
+            <label for="txtNewDescription">Description</label>
+            <textarea rows="5" id="txtNewDescription">
+
+            </textarea>
+
+            <label>
+                <input type="checkbox" id="chkNewPrivate" name="chkNewPrivate">Do you want to make this photo private?
+            </label>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <a href="" id="btnUploadNewPhoto" data-role="button" data-theme="b">Upload Photo</a>
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <div data-role="page" id="userSettingsPage">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/back.png" class="imgHeaderIcon" id="imgBackToUserPage">
+        </header>
+        <section data-role="content">
+            <form id="frnChangeUserSettings">
+                <label for="txtNewUserFirstName">First Name</label>
+                <input type="text" id="txtNewUserFirstName" name="txtNewUserFirstName"
+                       class="required"
+                       data-theme="a" data-clear-btn="true">
+                <label for="txtNewUserLastName">Last Name</label>
+                <input type="text" id="txtNewUserLastName" name="txtNewUserLastName"
+                       class="required"
+                       data-theme="a" data-clear-btn="true">
+                <label for="txtNewUsername">Username</label>
+                <input type="text" id="txtNewUsername" name="txtNewUsername"
+                       class="required"
+                       data-theme="a" data-clear-btn="true">
+                <label for="txtNewEmail">Email</label>
+                <input type="text" id="txtNewEmail" name="txtNewEmail"
+                       class="required"
+                       data-theme="a" data-clear-btn="true">
+            </form>
+            <a href="#" id="btnChangeUserSettings" data-role="button" data-theme="b">Change Settings</a>
+            <a href="#resetPasswordPage" data-role="button" data-theme="b">Change Password</a>
+            <a href="#aboutPage" data-role="button" data-theme="b">About</a>
+            <a href="" id="btnLogout" data-role="button" data-theme="b">Log Out</a>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                    <li><a href="#otherPhotosPage" data-icon="search"></a></li>
+                    <li><a href="#myPhotosPage" data-icon="user"
+                           class="ui-btn-active ui-state-persist"></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <div data-role="page" id="commentPage">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/back.png" class="imgHeaderIcon" id="imgBackToPhotosPageFromComment">
+        </header>
+        <section data-role="content" id="commentsSection">
+
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <textarea id="txtNewComment" data-theme="a">
+
+            </textarea>
+            <a href="" id="btnAddComment" data-role="button" data-theme="b">Add Comment</a>
+
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <div id="resetPasswordPage" data-role="page">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/back.png" class="imgHeaderIcon" id="imgBackToSettingsPage">
+        </header>
+        <section data-role="content">
+            <form id="frmChangePassword">
+                <label for="txtOldPassword">Old Password</label>
+                <input type="password" id="txtOldPassword" name="txtOldPassword"
+                       class="required"
+                       data-theme="a" data-clear-btn="true">
+                <br>
+                <label for="txtNewPassword">New Password</label>
+                <input type="password" id="txtNewPassword" name="txtNewPassword"
+                       class="required"
+                       data-theme="a" data-clear-btn="true">
+                <label for="txtConfirmNewPassword">Confirm New Password</label>
+                <input type="password" id="txtConfirmNewPassword" name="txtConfirmNewPassword"
+                       class="required"
+                       data-theme="a" data-clear-btn="true">
+                <a href="#" id="btnResetPassword" data-role="button" data-theme="b">Change Password</a>
+            </form>
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                    <li><a href="#otherPhotosPage" data-icon="search"></a></li>
+                    <li><a href="#myPhotosPage" data-icon="user"
+                           class="ui-btn-active ui-state-persist"></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <div data-role="page" id="aboutPage">
+        <header data-role="header" id="header" data-position="fixed">
+            <img src="images/logo.PNG" class="imgLogo">
+            <img src="images/back.png" class="imgHeaderIcon" id="imgBackToSettingsPageFromAboutPage">
+        </header>
+        <section data-role="content">
+            <label>Developer: Igor Rayt</label>
+            <label>Email: </label> <a href="mailto:wrightigor@gmail.com">wrightigor@gmail.com</a>
+
+        </section>
+        <footer data-role="footer" data-theme="b" data-position="fixed">
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li><a href="#photosPage" data-icon="home"></a></li>
+                    <li><a href="#otherPhotosPage" data-icon="search"></a></li>
+                    <li><a href="#myPhotosPage" data-icon="user"
+                           class="ui-btn-active ui-state-persist"></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+
+</body>
+</html>
